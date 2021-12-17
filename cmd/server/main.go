@@ -6,22 +6,22 @@ It sets the server up with its configurations.
 package main
 
 import (
+	"cmd/config/server"
 	"fmt"
 	"log"
-	"net/http"
-
-	"cmd/routes/bind"
-	"cmd/routes/home"
+	"os"
 )
 
 func main() {
-	// Configuration of routes
-	http.HandleFunc("/", home.Home)
-	http.HandleFunc("/bind", bind.Bind)
 
 	// Starting the server
+	app := server.SetupServer(8080)
+	if app == nil {
+		os.Exit(-1)
+	}
+
 	fmt.Println("Server is listening on 127.0.0.1:8080 ...")
-	err := http.ListenAndServe(":8080", nil)
+	err := app.ListenAndServe()
 
 	if err != nil {
 		log.Fatal(err)
