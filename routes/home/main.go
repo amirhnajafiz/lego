@@ -7,15 +7,22 @@ with status OK and message home.
 package home
 
 import (
-	"io"
+	"encoding/json"
 	"net/http"
 )
 
 // Home The home function handles the '/' route
 func Home(w http.ResponseWriter, r *http.Request) {
-	message := "Server response"
 	if r.Method != "GET" {
-		message = "Bad request"
+		return
 	}
-	_, _ = io.WriteString(w, message)
+
+	var data = make(map[string]string)
+	data["status"] = string(rune(http.StatusAccepted))
+	data["message"] = "Welcome Home"
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusAccepted)
+
+	_ = json.NewEncoder(w).Encode(data)
 }
