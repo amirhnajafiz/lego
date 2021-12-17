@@ -9,6 +9,7 @@ import (
 	"cmd/routes/home"
 )
 
+// SetupServer function will create a http server for us
 func SetupServer(port int) *http.Server {
 	// Configuration of routes
 	http.HandleFunc("/", home.Home)

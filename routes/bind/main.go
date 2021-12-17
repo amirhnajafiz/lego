@@ -10,15 +10,13 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
-
-	B "cmd/internal/bind-response"
 )
 
 // Bind handles the "/bind" route
 func Bind(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 
-	data := B.BindResponse{}
+	data := Response{}
 	data.Message = "Hello " + name
 	data.Time = time.Now()
 

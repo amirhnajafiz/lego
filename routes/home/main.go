@@ -10,8 +10,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-
-	H "cmd/internal/home-response"
 )
 
 // Home The home-response function handles the '/' route
@@ -20,7 +18,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var data = H.HomeResponse{}
+	var data = Response{}
 	data.Status = strconv.Itoa(http.StatusAccepted)
 	data.Message = "Welcome Home"
 

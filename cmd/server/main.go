@@ -13,7 +13,6 @@ import (
 )
 
 func main() {
-
 	// Starting the server
 	app := server.SetupServer(8080)
 	if app == nil {

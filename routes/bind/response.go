@@ -1,8 +1,8 @@
-package bind_response
+package bind
 
 import "time"
 
-type BindResponse struct {
+type Response struct {
 	Message string
 	Time    time.Time
 }
