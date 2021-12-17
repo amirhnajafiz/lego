@@ -9,17 +9,20 @@ package home
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
+
+	H "cmd/internal/home-response"
 )
 
-// Home The home function handles the '/' route
+// Home The home-response function handles the '/' route
 func Home(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		return
 	}
 
-	var data = make(map[string]string)
-	data["status"] = string(rune(http.StatusAccepted))
-	data["message"] = "Welcome Home"
+	var data = H.HomeResponse{}
+	data.Status = strconv.Itoa(http.StatusAccepted)
+	data.Message = "Welcome Home"
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusAccepted)
