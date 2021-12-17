@@ -1,0 +1,7 @@
+{
+  "name": "Lets-Go",
+  "version": "1.0.0",
+  "devDependencies": {
+    "k6": "^0.0.0"
+  }
+}
