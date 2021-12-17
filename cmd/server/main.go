@@ -10,12 +10,14 @@ import (
 	"log"
 	"net/http"
 
+	"cmd/routes/bind"
 	"cmd/routes/home"
 )
 
 func main() {
 	// Configuration of routes
 	http.HandleFunc("/", home.Home)
+	http.HandleFunc("/bind", bind.Bind)
 
 	// Starting the server
 	fmt.Println("Server is listening on 127.0.0.1:8080 ...")
