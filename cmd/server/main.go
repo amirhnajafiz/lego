@@ -7,14 +7,15 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"net/http"
+
+	"cmd/routes/home"
 )
 
 func main() {
 	// Configuration of routes
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", home.Home)
 
 	// Starting the server
 	fmt.Println("Server is listening on 127.0.0.1:8080 ...")
@@ -23,12 +24,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	message := "Server response"
-	if r.Method != "GET" {
-		message = "Bad request"
-	}
-	_, _ = io.WriteString(w, message)
 }
