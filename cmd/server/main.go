@@ -2,8 +2,7 @@
 This is the starter of the project.
 It sets the server up with its configurations.
 */
-
-package server
+package main
 
 import (
 	"fmt"
@@ -13,15 +12,14 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/amirhnajafiz/lets-go/cmd/routes/bind"
-	"github.com/amirhnajafiz/lets-go/cmd/routes/home"
+	"github.com/amirhnajafiz/lets-go/cmd/http/handler"
 )
 
 // SetupServer function will create a http server for us
 func setupServer(port int) *http.Server {
 	// Configuration of routes
-	http.HandleFunc("/", home.Home)
-	http.HandleFunc("/bind", bind.Bind)
+	http.HandleFunc("/", handler.Home)
+	http.HandleFunc("/bind", handler.Bind)
 
 	// Setting up the server
 	server := http.Server{
@@ -32,7 +30,7 @@ func setupServer(port int) *http.Server {
 	return &server
 }
 
-func Execute() {
+func main() {
 	// Starting the server
 	app := setupServer(8080)
 	if app == nil {

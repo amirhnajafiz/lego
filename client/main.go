@@ -6,11 +6,13 @@ import (
 	"net/http"
 )
 
-var home = "http://127.0.0.1:8080"
-var bind = "http://127.0.0.1:8080/bind?name="
+var (
+	homeUrl = "http://127.0.0.1:8080"
+	bindUrl = "http://127.0.0.1:8080/bind?name="
+)
 
 func main() {
-	resp, err := http.Get(home)
+	resp, err := http.Get(homeUrl)
 	if err != nil {
 		panic(err)
 	}
@@ -23,7 +25,7 @@ func main() {
 		fmt.Println(scanner.Text())
 	}
 
-	resp, err = http.Get(bind + "Amir")
+	resp, err = http.Get(bindUrl + "Amir")
 	if err != nil {
 		panic(err)
 	}
