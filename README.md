@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="go.jpeg" alt="logo" />
+</p>
+
 <h1 align="center">
 Lets Go
 </h1>
