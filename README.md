@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="go.jpeg" alt="logo" />
+    <img src=".github/assets/golang.jpeg" alt="logo" />
 </p>
 
 <h1 align="center">
@@ -13,7 +13,7 @@ This project is perfect for people who want to start learning Golang.
 
 ## What did I learn?
 - golang files and package structure
-- net/http package 
+- net/http package
 - k6 testing
 
 ## Project structure in Golang 
