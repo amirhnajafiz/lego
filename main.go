@@ -8,19 +8,21 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/amirhnajafiz/letsgo/internal/http/handler"
+	internalHTTP "github.com/amirhnajafiz/letsgo/internal/http"
 )
 
-// SetupServer function will create a http server for us
+// setupServer creates a net/http server and sets
+// the internal router for user requests.
 func setupServer(port int) *http.Server {
-	// Configuration of routes
-	http.HandleFunc("/", handler.Home)
-	http.HandleFunc("/bind", handler.Bind)
+	// create a new mux server
+	muxServer := internalHTTP.Bootstrap()
 
-	// Setting up the server
+	// setting up the http server
 	server := http.Server{
-		Addr:        ":" + strconv.Itoa(port),
-		ReadTimeout: time.Second * 5,
+		Addr:         ":" + strconv.Itoa(port),
+		ReadTimeout:  time.Second * 5,
+		WriteTimeout: time.Second * 10,
+		Handler:      muxServer,
 	}
 
 	return &server
