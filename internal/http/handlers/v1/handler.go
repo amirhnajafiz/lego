@@ -6,6 +6,7 @@ import (
 	"github.com/amirhnajafiz/letsgo/internal/metrics"
 	"github.com/amirhnajafiz/letsgo/internal/storage"
 	"github.com/amirhnajafiz/letsgo/pkg/converter"
+	"github.com/amirhnajafiz/letsgo/pkg/measure"
 )
 
 // Handler is a struct that implements application handlers for user
@@ -61,6 +62,10 @@ func (h Handler) HandlePostRequests(w http.ResponseWriter, r *http.Request) {
 	// store in storage
 	h.Storage.Store(key, value)
 
+	// update metrics
+	h.Metrics.IncObjects()
+	h.Metrics.ObsMemory(measure.GetObjectSize(key) + measure.GetObjectSize(value))
+
 	// return the response
 	w.WriteHeader(http.StatusOK)
 }
@@ -84,6 +89,10 @@ func (h Handler) HandleDeleteRequests(w http.ResponseWriter, r *http.Request) {
 
 	// delete object from the storage
 	h.Storage.Delete(key)
+
+	// update metrics
+	h.Metrics.DecObjects()
+	h.Metrics.ObsMemory(-1 * (measure.GetObjectSize(key) + measure.GetObjectSize(obj)))
 
 	// return the response
 	w.WriteHeader(http.StatusOK)
