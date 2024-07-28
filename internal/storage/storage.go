@@ -9,9 +9,9 @@ type Storage interface {
 }
 
 // NewStorage returns a struct which supports Storage interface, in our case
-// it returns a localstorage instance.
+// it returns a localStorage instance.
 func NewStorage() Storage {
-	return &localstorage{
+	return &localStorage{
 		mapStore: make(map[string]*interface{}),
 	}
 }
