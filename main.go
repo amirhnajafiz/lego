@@ -1,7 +1,3 @@
-/**
-This is the starter of the project.
-It sets the server up with its configurations.
-*/
 package main
 
 import (
@@ -12,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/amirhnajafiz/lets-go/cmd/http/handler"
+	"github.com/amirhnajafiz/letsgo/internal/http/handler"
 )
 
 // SetupServer function will create a http server for us

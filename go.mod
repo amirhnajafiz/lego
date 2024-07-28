@@ -1,3 +1,3 @@
-module github.com/amirhnajafiz/lets-go
+module github.com/amirhnajafiz/letsgo
 
 go 1.20
