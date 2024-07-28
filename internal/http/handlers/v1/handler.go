@@ -1,6 +1,7 @@
 package responses
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/amirhnajafiz/letsgo/internal/metrics"
@@ -19,6 +20,8 @@ type Handler struct {
 func (h Handler) HandleGetRequests(w http.ResponseWriter, r *http.Request) {
 	// check if method is GET
 	if r.Method != http.MethodGet {
+		log.Printf("unsupported method: %s\n", r.Method)
+
 		return
 	}
 
@@ -41,6 +44,8 @@ func (h Handler) HandleGetRequests(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 
+		log.Printf("failed to marshal to JSON: %v\n", err)
+
 		return
 	}
 
@@ -52,6 +57,8 @@ func (h Handler) HandleGetRequests(w http.ResponseWriter, r *http.Request) {
 func (h Handler) HandlePostRequests(w http.ResponseWriter, r *http.Request) {
 	// check if method is POST
 	if r.Method != http.MethodPost {
+		log.Printf("unsupported method: %s\n", r.Method)
+
 		return
 	}
 
@@ -73,6 +80,8 @@ func (h Handler) HandlePostRequests(w http.ResponseWriter, r *http.Request) {
 func (h Handler) HandleDeleteRequests(w http.ResponseWriter, r *http.Request) {
 	// check if method is DELETE
 	if r.Method != http.MethodDelete {
+		log.Printf("unsupported method: %s\n", r.Method)
+
 		return
 	}
 
