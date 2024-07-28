@@ -50,6 +50,16 @@ func (h Handler) HandlePostRequests(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		return
 	}
+
+	// get object key and value from query params
+	key := r.URL.Query().Get("key")
+	value := r.URL.Query().Get("value")
+
+	// store in storage
+	h.Storage.Store(key, value)
+
+	// return the response
+	w.WriteHeader(http.StatusOK)
 }
 
 func (h Handler) HandleDeleteRequests(w http.ResponseWriter, r *http.Request) {
@@ -57,4 +67,21 @@ func (h Handler) HandleDeleteRequests(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
 		return
 	}
+
+	// get object key from query params
+	key := r.URL.Query().Get("key")
+
+	// fetch object from storage
+	obj := h.Storage.Receive(key)
+	if obj == nil {
+		w.WriteHeader(http.StatusNotFound)
+
+		return
+	}
+
+	// delete object from the storage
+	h.Storage.Delete(key)
+
+	// return the response
+	w.WriteHeader(http.StatusOK)
 }
