@@ -16,14 +16,13 @@ export const options = {
         { target: 0, duration: '1m' },
     ],
     thresholds: {
-        requests: ['count < 100'],
+        requests: ['count < 10'],
     },
 };
 
 export default function () {
     // our HTTP request, note that we are saving the response to res, which can be accessed later
-
-    let res = http.get('http://127.0.0.1:8080');
+    let res = http.get('http://localhost:8080/healthz');
 
     sleep(1);
 
@@ -33,7 +32,7 @@ export default function () {
 
     console.log(checkRes)
 
-    res = http.get('http://127.0.0.1:8080/bind?name=Amir');
+    res = http.get('http://localhost:8080/metrics');
 
     sleep(1);
 
