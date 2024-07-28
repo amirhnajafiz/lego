@@ -46,7 +46,7 @@ func main() {
 		panic("failed to create a new application")
 	}
 
-	fmt.Printf("http server bounded to port  %d on this machine \n\tand its ready to handle input requests ...", httpPort)
+	fmt.Printf("http server bounded to port  %d on this machine \n\tand its ready to handle input requests ...\n", httpPort)
 
 	// start the http server
 	if err := app.ListenAndServe(); err != nil {

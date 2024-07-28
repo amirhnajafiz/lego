@@ -7,12 +7,13 @@ import (
 )
 
 var (
-	homeUrl = "http://127.0.0.1:8080"
-	bindUrl = "http://127.0.0.1:8080/bind?name="
+	baseURL     = "http://127.0.0.1:8080"
+	healthPath  = "/healthz"
+	metricsPath = "/metrics"
 )
 
 func main() {
-	resp, err := http.Get(homeUrl)
+	resp, err := http.Get(baseURL + healthPath)
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +26,7 @@ func main() {
 		fmt.Println(scanner.Text())
 	}
 
-	resp, err = http.Get(bindUrl + "Amir")
+	resp, err = http.Get(baseURL + metricsPath)
 	if err != nil {
 		panic(err)
 	}
