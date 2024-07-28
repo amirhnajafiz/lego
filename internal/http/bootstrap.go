@@ -36,9 +36,9 @@ func Bootstrap() *http.ServeMux {
 	router.HandleFunc("/healthz", v0Handler.ReturnHealthStatus)
 	router.HandleFunc("/metrics", v0Handler.ReturnMetrics)
 
-	router.Handle("/v1/get", middleware.CountRequestsMiddleware(http.HandlerFunc(v1Handler.HandleGetRequests)))
-	router.Handle("/v1/new", middleware.CountRequestsMiddleware(http.HandlerFunc(v1Handler.HandlePostRequests)))
-	router.Handle("/v1/del", middleware.CountRequestsMiddleware(http.HandlerFunc(v1Handler.HandleDeleteRequests)))
+	router.Handle("/v1/get", middleware.LogPerRequest(middleware.CountRequestsMiddleware(http.HandlerFunc(v1Handler.HandleGetRequests))))
+	router.Handle("/v1/new", middleware.LogPerRequest(middleware.CountRequestsMiddleware(http.HandlerFunc(v1Handler.HandlePostRequests))))
+	router.Handle("/v1/del", middleware.LogPerRequest(middleware.CountRequestsMiddleware(http.HandlerFunc(v1Handler.HandleDeleteRequests))))
 
 	return router
 }
