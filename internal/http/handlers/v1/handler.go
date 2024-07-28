@@ -33,7 +33,10 @@ func (h Handler) HandleGetRequests(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// convert to JSON object
-	bytes, err := converter.StructToJSON(obj)
+	bytes, err := converter.StructToJSON(objectResponse{
+		Key:    key,
+		Values: obj.(string),
+	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 

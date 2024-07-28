@@ -1,8 +1,8 @@
 package responses
 
-// ObjectResponse is a struct used for returning user
+// objectResponse is a struct used for returning user
 // get request as a JSON object.
-type ObjectResponse struct {
+type objectResponse struct {
 	Key    string `json:"key"`
 	Values string `json:"value"`
 }
