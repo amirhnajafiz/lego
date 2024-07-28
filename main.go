@@ -3,18 +3,18 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 	"time"
 
 	internalHTTP "github.com/amirhnajafiz/letsgo/internal/http"
+	"github.com/amirhnajafiz/letsgo/pkg/converter"
 )
 
 // system's variables
 var (
-	httpPort     = 8080
-	readTimeout  = 10
-	writeTimeout = 5
+	httpPort     int
+	readTimeout  int
+	writeTimeout int
 )
 
 // setupServer creates a net/http server and sets
@@ -34,17 +34,11 @@ func setupServer() *http.Server {
 	return &server
 }
 
-// loadEnvVariables read environmental variables values to update system's
-// base variables.
-func loadEnvVariables() {
-	httpPort, _ = strconv.Atoi(os.Getenv("GOHTTP_PORT"))
-	readTimeout, _ = strconv.Atoi(os.Getenv("GOHTTP_READ_TO"))
-	writeTimeout, _ = strconv.Atoi(os.Getenv("GOHTTP_WRITE_TO"))
-}
-
 func main() {
 	// load env variables
-	loadEnvVariables()
+	httpPort = converter.EnvToInt("GOHTTP_PORT", 8080)
+	readTimeout = converter.EnvToInt("GOHTTP_READ_TO", 5)
+	writeTimeout = converter.EnvToInt(("GOHTTP_WRITE_TO"), 10)
 
 	// create a new net/http server instance
 	app := setupServer()
