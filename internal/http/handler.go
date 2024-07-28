@@ -1,19 +1,17 @@
-package handler
+package http
 
 import (
 	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
-
-	"github.com/amirhnajafiz/lets-go/cmd/http/response"
 )
 
 // Bind handles the "/bind" route
 func Bind(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 
-	data := response.BindResponse{}
+	data := BindResponse{}
 	data.Message = "Hello " + name
 	data.Time = time.Now()
 
@@ -29,7 +27,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var data = response.HomeResponse{}
+	var data = HomeResponse{}
 	data.Status = strconv.Itoa(http.StatusAccepted)
 	data.Message = "Welcome Home"
 
