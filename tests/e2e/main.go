@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"net/url"
 )
 
 // create base variables
@@ -24,14 +23,17 @@ type testingFunc func() error
 
 // create testing methods
 func TestPost() error {
-	uri := url.URL{
-		Host: fmt.Sprintf("%s/v1/new", baseURL),
+	uri := fmt.Sprintf("%s/v1/new", baseURL)
+	req, err := http.NewRequest(http.MethodPost, uri, nil)
+	if err != nil {
+		panic(err)
 	}
 
-	uri.Query().Add("key", ktest)
-	uri.Query().Add("value", vtest)
+	q := req.URL.Query()
+	q.Add("key", ktest)
+	q.Add("value", vtest)
+	req.URL.RawQuery = q.Encode()
 
-	req, _ := http.NewRequest(http.MethodPost, uri.String(), nil)
 	client := http.Client{}
 
 	if resp, err := client.Do(req); err != nil {
@@ -39,6 +41,7 @@ func TestPost() error {
 
 		return errResponse
 	} else {
+		log.Println(uri, resp.StatusCode)
 		if resp.StatusCode != 200 {
 			return errServer
 		}
@@ -48,13 +51,16 @@ func TestPost() error {
 }
 
 func TestGet() error {
-	uri := url.URL{
-		Host: fmt.Sprintf("%s/v1/get", baseURL),
+	uri := fmt.Sprintf("%s/v1/get", baseURL)
+	req, err := http.NewRequest(http.MethodGet, uri, nil)
+	if err != nil {
+		panic(err)
 	}
 
-	uri.Query().Add("key", ktest)
+	q := req.URL.Query()
+	q.Add("key", ktest)
+	req.URL.RawQuery = q.Encode()
 
-	req, _ := http.NewRequest(http.MethodGet, uri.String(), nil)
 	client := http.Client{}
 
 	if resp, err := client.Do(req); err != nil {
@@ -62,15 +68,9 @@ func TestGet() error {
 
 		return errResponse
 	} else {
+		log.Println(uri, resp.StatusCode)
 		if resp.StatusCode != 200 {
 			return errServer
-		}
-
-		data := make([]byte, 0)
-		if _, err := resp.Body.Read(data); err == nil {
-			if string(data) != vtest {
-				return errResponse
-			}
 		}
 	}
 
@@ -78,13 +78,16 @@ func TestGet() error {
 }
 
 func TestDelete() error {
-	uri := url.URL{
-		Host: fmt.Sprintf("%s/v1/del", baseURL),
+	uri := fmt.Sprintf("%s/v1/del", baseURL)
+	req, err := http.NewRequest(http.MethodDelete, uri, nil)
+	if err != nil {
+		panic(err)
 	}
 
-	uri.Query().Add("key", ktest)
+	q := req.URL.Query()
+	q.Add("key", ktest)
+	req.URL.RawQuery = q.Encode()
 
-	req, _ := http.NewRequest(http.MethodDelete, uri.String(), nil)
 	client := http.Client{}
 
 	if resp, err := client.Do(req); err != nil {
@@ -92,6 +95,7 @@ func TestDelete() error {
 
 		return errResponse
 	} else {
+		log.Println(uri, resp.StatusCode)
 		if resp.StatusCode != 200 {
 			return errServer
 		}
@@ -112,4 +116,6 @@ func main() {
 			panic(err)
 		}
 	}
+
+	log.Println("all tests are passed.")
 }

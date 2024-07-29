@@ -7,7 +7,7 @@ import "log"
 type consoleLogr struct{}
 
 func (c consoleLogr) Info(messages ...string) {
-	format := "[[info]] %s\n"
+	format := "[[info]] %s"
 
 	for _, msg := range messages {
 		log.Printf(format, msg)
@@ -15,7 +15,7 @@ func (c consoleLogr) Info(messages ...string) {
 }
 
 func (c consoleLogr) Warning(messages ...string) {
-	format := "[[warning]] %s\n"
+	format := "[[warning]] %s"
 
 	for _, msg := range messages {
 		log.Printf(format, msg)
@@ -23,7 +23,7 @@ func (c consoleLogr) Warning(messages ...string) {
 }
 
 func (c consoleLogr) Error(err error, messages ...string) {
-	format := "[[error]] %s\n"
+	format := "[[error]] %s"
 
 	log.Println(err)
 
