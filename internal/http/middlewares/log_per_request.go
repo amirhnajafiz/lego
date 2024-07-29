@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+// loggingResponseWriter is used to access the request's response status
+// after the request is handled.
 type loggingResponseWriter struct {
 	http.ResponseWriter
 	statusCode int
