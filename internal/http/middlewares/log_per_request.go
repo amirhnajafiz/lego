@@ -6,26 +6,25 @@ import (
 	"time"
 )
 
-// requestInfoLog prints the request data and result after the request is handled.
-func (m MiddlewaresManager) requestInfoLog(r *http.Request, timestamp time.Time) {
-	requestDuration := time.Since(timestamp).Microseconds()
+type loggingResponseWriter struct {
+	http.ResponseWriter
+	statusCode int
+}
 
-	messages := []string{
-		fmt.Sprintf(" [%s]", r.Method),
-		fmt.Sprintf(" path: %s", r.URL.Path),
-		fmt.Sprintf(" status: %d", r.Response.StatusCode),
-		fmt.Sprintf(" duration: %d ms", requestDuration),
-	}
-
-	m.Logr.Info(messages...)
+func (lrw *loggingResponseWriter) WriteHeader(code int) {
+	lrw.statusCode = code
+	lrw.ResponseWriter.WriteHeader(code)
 }
 
 func (m MiddlewaresManager) LogPerRequest(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ts := time.Now()
+		lrw := &loggingResponseWriter{ResponseWriter: w, statusCode: http.StatusOK}
 
-		defer m.requestInfoLog(r, ts)
+		defer func() {
+			m.Logr.Info(fmt.Sprintf("[%s] %s status: %d latency: %d ms", r.Method, r.URL.Path, lrw.statusCode, time.Since(ts).Microseconds()))
+		}()
 
-		next.ServeHTTP(w, r)
+		next.ServeHTTP(lrw, r)
 	})
 }
