@@ -6,7 +6,7 @@ import (
 	v0 "github.com/amirhnajafiz/letsgo/internal/http/handlers/v0"
 	v1 "github.com/amirhnajafiz/letsgo/internal/http/handlers/v1"
 	"github.com/amirhnajafiz/letsgo/internal/http/middlewares"
-	"github.com/amirhnajafiz/letsgo/internal/metrics"
+	"github.com/amirhnajafiz/letsgo/internal/monitoring/metrics"
 	"github.com/amirhnajafiz/letsgo/internal/storage"
 )
 

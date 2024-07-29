@@ -3,7 +3,7 @@ package v0
 import (
 	"net/http"
 
-	"github.com/amirhnajafiz/letsgo/internal/metrics"
+	"github.com/amirhnajafiz/letsgo/internal/monitoring/metrics"
 	"github.com/amirhnajafiz/letsgo/pkg/converter"
 )
 

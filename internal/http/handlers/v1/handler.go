@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/amirhnajafiz/letsgo/internal/metrics"
+	"github.com/amirhnajafiz/letsgo/internal/monitoring/metrics"
 	"github.com/amirhnajafiz/letsgo/internal/storage"
 	"github.com/amirhnajafiz/letsgo/pkg/converter"
 	"github.com/amirhnajafiz/letsgo/pkg/measure"
