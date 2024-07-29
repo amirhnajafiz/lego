@@ -21,7 +21,7 @@ func (lrw *loggingResponseWriter) WriteHeader(code int) {
 func (m MiddlewaresManager) LogPerRequest(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ts := time.Now()
-		lrw := &loggingResponseWriter{ResponseWriter: w, statusCode: http.StatusOK}
+		lrw := &loggingResponseWriter{ResponseWriter: w, statusCode: http.StatusNotImplemented}
 
 		defer func() {
 			m.Logr.Info(fmt.Sprintf("[%s] %s status: %d latency: %d ms", r.Method, r.URL.Path, lrw.statusCode, time.Since(ts).Microseconds()))
