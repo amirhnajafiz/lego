@@ -6,6 +6,7 @@ import (
 	v0 "github.com/amirhnajafiz/letsgo/internal/http/handlers/v0"
 	v1 "github.com/amirhnajafiz/letsgo/internal/http/handlers/v1"
 	"github.com/amirhnajafiz/letsgo/internal/http/middlewares"
+	"github.com/amirhnajafiz/letsgo/internal/monitoring/logging"
 	"github.com/amirhnajafiz/letsgo/internal/monitoring/metrics"
 	"github.com/amirhnajafiz/letsgo/internal/storage"
 )
@@ -19,10 +20,12 @@ func Bootstrap() *http.ServeMux {
 	// create system's requirements
 	metricsInstance := metrics.NewMetrics()
 	storageInstance := storage.NewStorage()
+	logrInstance := logging.NewLogr()
 
 	// create middleware and handlers instances
 	middleware := middlewares.MiddlewaresManager{
 		Metrics: metricsInstance,
+		Logr:    logrInstance,
 	}
 	v0Handler := v0.Handler{
 		Metrics: metricsInstance,
@@ -30,6 +33,7 @@ func Bootstrap() *http.ServeMux {
 	v1Handler := v1.Handler{
 		Metrics: metricsInstance,
 		Storage: storageInstance,
+		Logr:    logrInstance,
 	}
 
 	// setup router endpoints
