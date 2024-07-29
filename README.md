@@ -11,7 +11,7 @@ This project is perfect for people who want to start learning Golang.
 - net/http package
 - k6 testing
 
-## Project structure in Golang 
+## Project structure in Golang
 
 Every Golang project has a **go.mod** file. This file manages the modules that we import and use
 in our Golang projects. Remember that module name should be like your github repository address.
@@ -20,7 +20,7 @@ in our Golang projects. Remember that module name should be like your github rep
 module github.com/USERNAME/REPOSITORY
 ```
 
-Now we have a _CMD_ which contains all of our Golang application codes. In this folder we have an _http_ module which manages 
+Now we have a _CMD_ which contains all of our Golang application codes. In this folder we have an _http_ module which manages
 the server handlers and server responses. The other module is _server_ itself that manages the application.
 
 ```sh
@@ -95,7 +95,7 @@ default ✗ [====>---------------------------------] 08/20 VUs  0m23.7s/3m00.0s
      vus_max........................: 20      min=20     max=20
 ```
 
-### Golang 
+### Golang
 
 Or using Goland HTTP Client with the following command:
 
