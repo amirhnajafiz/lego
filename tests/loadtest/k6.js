@@ -1,44 +1,45 @@
 import http from 'k6/http';
 import { sleep, check } from 'k6';
-import { Counter } from 'k6/metrics';
-
-// A simple counter for http requests
-
-export const requests = new Counter('http_reqs');
-
-// you can specify stages of your test (ramp up/down patterns) through the options object
-// target is the number of VUs you are aiming for
 
 export const options = {
-    stages: [
-        { target: 20, duration: '1m' },
-        { target: 15, duration: '1m' },
-        { target: 0, duration: '1m' },
-    ],
+    iterations: 1,
+    // stages: [
+    //     { target: 20, duration: '1m' },
+    //     { target: 15, duration: '1m' },
+    //     { target: 0, duration: '1m' },
+    // ],
     thresholds: {
         requests: ['count < 10'],
     },
 };
 
 export default function () {
-    // our HTTP request, note that we are saving the response to res, which can be accessed later
-    let res = http.get('http://localhost:8080/healthz');
+    const url = "http://localhost:8080";
+
+    // post stage
+    const presponse = http.post(url+"/v1/new?key=ktest&value=vtest");
+    let pcheckRes = check(presponse, {
+        'status is 200': (r) => r.status === 200,
+    });
+    console.log(pcheckRes)
 
     sleep(1);
 
-    let checkRes = check(res, {
-        'status is 200': (r) => r.status === 202,
+    // get stage
+    const gresponse = http.post(url+"/v1/get?key=ktest");
+    let gcheckRes = check(gresponse, {
+        'status is 200': (r) => r.status === 200,
     });
-
-    console.log(checkRes)
-
-    res = http.get('http://localhost:8080/metrics');
+    console.log(gcheckRes)
 
     sleep(1);
 
-    checkRes = check(res, {
-        'status is 200': (r) => r.status === 202,
+    // delete stage
+    const dresponse = http.post(url+"/v1/del?key=ktest");
+    let dcheckRes = check(dresponse, {
+        'status is 200': (r) => r.status === 200,
     });
+    console.log(dcheckRes)
 
-    console.log(checkRes)
+    sleep(1);
 }
