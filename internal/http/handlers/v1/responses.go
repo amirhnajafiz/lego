@@ -1,4 +1,4 @@
-package responses
+package v1
 
 // objectResponse is a struct used for returning user
 // get request as a JSON object.
