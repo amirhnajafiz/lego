@@ -27,8 +27,6 @@ func (h Handler) HandleGetRequests(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	defer h.requestInfoLog(r)
-
 	// get object key from query params
 	key := r.URL.Query().Get("key")
 
@@ -66,8 +64,6 @@ func (h Handler) HandlePostRequests(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	defer h.requestInfoLog(r)
-
 	// get object key and value from query params
 	key := r.URL.Query().Get("key")
 	value := r.URL.Query().Get("value")
@@ -90,8 +86,6 @@ func (h Handler) HandleDeleteRequests(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
-
-	defer h.requestInfoLog(r)
 
 	// get object key from query params
 	key := r.URL.Query().Get("key")

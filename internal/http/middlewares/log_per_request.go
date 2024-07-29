@@ -1,17 +1,30 @@
 package middlewares
 
 import (
-	"context"
+	"fmt"
 	"net/http"
 	"time"
 )
 
-// contextKey type is used for setting a value on user request context
-type contextKey string
+// requestInfoLog prints the request data and result after the request is handled.
+func (m MiddlewaresManager) requestInfoLog(r *http.Request, timestamp time.Time) {
+	requestDuration := time.Since(timestamp).Microseconds()
+
+	messages := []string{
+		fmt.Sprintf(" [%s]", r.Method),
+		fmt.Sprintf(" path: %s", r.URL.Path),
+		fmt.Sprintf(" status: %d", r.Response.StatusCode),
+		fmt.Sprintf(" duration: %d ms", requestDuration),
+	}
+
+	m.Logr.Info(messages...)
+}
 
 func (m MiddlewaresManager) LogPerRequest(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		r = r.WithContext(context.WithValue(r.Context(), contextKey("timestamp"), time.Now()))
+		ts := time.Now()
+
+		defer m.requestInfoLog(r, ts)
 
 		next.ServeHTTP(w, r)
 	})
