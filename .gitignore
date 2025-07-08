@@ -12,10 +12,14 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
-.vscode
+# IDE
+.vscode/
 .idea/
 
+# Build output
+build/
 node_modules/
 main
+main~
