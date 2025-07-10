@@ -2,8 +2,8 @@ name: Go Test
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches:
       - master
