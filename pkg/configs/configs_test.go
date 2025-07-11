@@ -17,6 +17,7 @@ type exampleConfig struct {
 	A string `koanf:"a"`
 	B int    `koanf:"b"`
 	C bool   `koanf:"c"`
+	D string `koanf:"d"`
 }
 
 // createTestFile creates a test file with the given content.
@@ -38,6 +39,9 @@ func deleteTestFile(filePath string) error {
 	return nil
 }
 
+// TestConfigs tests the configuration loading functionality.
+// It creates a temporary YAML file, loads it using the New function,
+// and checks if the values are correctly parsed into the exampleConfig struct.
 func TestConfigs(t *testing.T) {
 	filePath := "test_config.yaml"
 	defer deleteTestFile(filePath)
@@ -48,11 +52,14 @@ func TestConfigs(t *testing.T) {
 		t.Fatalf("failed to create test file: %v", err)
 	}
 
+	// set the environment variable for testing
+	os.Setenv("MBE_d", "env value")
+
 	// create an instance of exampleConfig
 	instance := &exampleConfig{}
 
 	// load the configuration
-	cfg, err := New(filePath, "", instance)
+	cfg, err := New(filePath, "MBE_", instance)
 	if err != nil {
 		t.Fatalf("failed to load config: %v", err)
 	}
@@ -66,5 +73,8 @@ func TestConfigs(t *testing.T) {
 	}
 	if cfg.(*exampleConfig).C != true {
 		t.Errorf("expected C to be true, got %v", cfg.(*exampleConfig).C)
+	}
+	if cfg.(*exampleConfig).D != "env value" {
+		t.Errorf("expected D to be 'env value', got '%s'", cfg.(*exampleConfig).D)
 	}
 }
